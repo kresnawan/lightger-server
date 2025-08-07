@@ -2,12 +2,17 @@ import mysql.connector
 from flask import Flask
 from flask import request
 
+mysqlhost = open("mysqlhost.txt", "r").read()
+mysqluser = open("mysqluser.txt", "r").read()
+mysqlpassword = open("mysqlpassword.txt", "r").read()
+mysqldb = open("mysqldb.txt", "r").read()
+
 
 mydb = mysql.connector.connect(
-    host = "212.85.25.153",
-    user = "kris",
-    password = "Krisnauwu875",
-    database = "mydb"
+    host = mysqlhost,
+    user = mysqluser,
+    password = mysqlpassword,
+    database = mysqldb
 )
 
 
@@ -25,7 +30,7 @@ app = Flask(__name__)
 def hello_world():
     return "<h1>Hello world!</h1>"
 
-@app.route("/users")
+@app.route("/users", methods=['GET'])
 def showdata():
     mycursor.execute("SELECT * from users")
     resultan = mycursor.fetchall()
