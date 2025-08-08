@@ -22,7 +22,7 @@ def signup(nD, nB, usr, pw):
     cursor.execute(sqlInsert, vl)
     db.commit()
     if(cursor.rowcount == 1):
-        return 1
+        return 30
     else:
         return 25
     
@@ -37,7 +37,9 @@ def login(usr, pw):
 
             # Memeriksa apakah password benar
             if(pwInputHashed == x[4]):
-                return 28
+                cursor.execute(f"UPDATE users SET isLoggedIn = '{x[3]}' WHERE id = {int(x[0])}")
+                db.commit()
+                return 31
             
             # Password salah
             return 29
@@ -45,19 +47,17 @@ def login(usr, pw):
     # username tidak ada
     return 27
 
-def deleteAccount(usr):
-    cursor.execute("SELECT * from users")
-    fetched = cursor.fetchall()
+def logout(usr):
+    cursor.execute(f"UPDATE users SET isLoggedIn = null WHERE username = '{usr}'")
+    db.commit()
+    return 32
 
-    for x in fetched:
-        if(x[3] == usr):
-            # hapus akun dari database
-            cursor.execute(f"DELETE FROM users WHERE username='{x[3]}'")
-            db.commit()
-            return 1
+def deleteAccount(usr):
+    cursor.execute(f"DELETE FROM users WHERE username='{usr}'")
+    db.commit()
+    return 33
     
     # username tidak ditemukan
-    return 27
     
 # print(signup("Buda", "Soleh", "kresnawan", "kris123"))
 

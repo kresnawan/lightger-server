@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
-from user import signup
+from flask import make_response
+from user import signup, login, logout, deleteAccount
 
 app = Flask(__name__)
 
@@ -10,22 +11,44 @@ def hello_world():
 
 @app.route("/signup", methods=['POST'])
 def signup_():
+    
     res = signup(request.form["nD"], request.form["nB"], request.form["usr"], request.form["pw"])
-    if(res == 1):
-        return "Telah berhasil membuat akun"
-    else:
-        return "Terjadi error"
-
-@app.route("/user/<username>")
-def user_show(username):
-    return f"This is {username}'s page!"
+    resp = make_response({'status': res})
+    return resp
 
 @app.route("/login", methods=['POST'])
-def login():
-    return f"This request sent by {request.form["user"]} that's aged {request.form["age"]} years old!"
+def login_():
+    usern = request.form["usr"]
+    passw = request.form["pw"]
+    res = login(usern, passw)
+    if(res == 31):
+        resp = make_response("Managed to login")
+        resp.set_cookie("user", usern, domain='127.0.0.1')
+        return resp
+    
+    return "Login gagal"
+
+@app.route("/logout", methods=['GET'])
+def logout_():
+    res = logout(request.cookies["user"])
+    resp = make_response({'status': res})
+    resp.delete_cookie("user")
+    return resp
+
+@app.route("/deleteacc", methods=['POST'])
+def deleteacc_():
+    res = deleteAccount(request.form["usr"])
+    resp = make_response({'status': res})
+    resp.delete_cookie("user")
+    return resp
+    
+
+    # res = make_response("Creating cookie")
+    # res.set_cookie("user", "kris", domain='127.0.0.1')
+    # return res
+
 # mycursor.execute('DELETE FROM users WHERE id = 2')
 # mydb.commit()
-
 
 
 
