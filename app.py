@@ -1,6 +1,12 @@
+import sys
+
+sys.path.append("/func")
+
 import mysql.connector
 from flask import Flask
 from flask import request
+from user import signup
+
 
 mysqlhost = open("mysqlhost.txt", "r").read()
 mysqluser = open("mysqluser.txt", "r").read()
