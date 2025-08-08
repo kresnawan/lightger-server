@@ -60,8 +60,5 @@ def deleteAccount(usr):
     return 27
     
 # print(signup("Buda", "Soleh", "kresnawan", "kris123"))
-cursor.execute("SELECT * from users")
-for x in cursor.fetchall():
-    print(x)
 
     
