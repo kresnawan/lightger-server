@@ -1,10 +1,15 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+mysqlhost = os.getenv('MYSQL_HOST')
+mysqluser = os.getenv('MYSQL_USER')
+mysqlpassword = os.getenv('MYSQL_PASSWORD')
+mysqldb = os.getenv('MYSQL_DB')
+
 def dbConnect():
     import mysql.connector
-
-    mysqlhost = open("C:/Users/Kris/Documents/code/ledger_server/mysqlhost.txt", "r").read()
-    mysqluser = open("C:/Users/Kris/Documents/code/ledger_server/mysqluser.txt", "r").read()
-    mysqlpassword = open("C:/Users/Kris/Documents/code/ledger_server/mysqlpassword.txt", "r").read()
-    mysqldb = open("C:/Users/Kris/Documents/code/ledger_server/mysqldb.txt", "r").read()
 
     mydb = mysql.connector.connect(
         host = mysqlhost,

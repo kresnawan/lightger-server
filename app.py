@@ -1,35 +1,13 @@
 import sys
 
-sys.path.append("/func")
+sys.path.append("./func")
 
-import mysql.connector
 from flask import Flask
 from flask import request
-from user import signup
-
-
-mysqlhost = open("mysqlhost.txt", "r").read()
-mysqluser = open("mysqluser.txt", "r").read()
-mysqlpassword = open("mysqlpassword.txt", "r").read()
-mysqldb = open("mysqldb.txt", "r").read()
-
-
-mydb = mysql.connector.connect(
-    host = mysqlhost,
-    user = mysqluser,
-    password = mysqlpassword,
-    database = mysqldb
-)
-
-
-
-sqlInsert = "INSERT INTO users (namaDepan, namaBelakang, username, password) VALUES(%s, %s, %s, %s)"
-vl = ("Tri", "Habibi", "trihabibi", "Hab123")
-
+from user import log
 
 mycursor = mydb.cursor()
 app = Flask(__name__)
-
 
 
 @app.route("/")
