@@ -3,6 +3,7 @@ from flask import request
 from flask import make_response
 from flask_cors import CORS
 from user import signup, login, logout, deleteAccount
+from data import getUserTransaction, getUserFunds
 
 app = Flask(__name__)
 CORS(app, resources={"/*" : {"origins" : "*"}}, supports_credentials=True)

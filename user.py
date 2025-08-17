@@ -21,6 +21,11 @@ def signup(nD, nB, usr, pw):
     vl = (nD, nB, usr, hashedPw)
     cursor.execute(sqlInsert, vl)
     db.commit()
+    cursor.execute("SELECT LAST_INSERT_ID()")
+    data = cursor.fetchall()
+
+    cursor.execute(f"INSERT INTO funds (userId, fund) VALUES ('{data[0][0]}', '0')")
+    db.commit()
     if(cursor.rowcount == 1):
         return 30
     else:
@@ -60,5 +65,6 @@ def deleteAccount(usr):
     # username tidak ditemukan
     
 # print(signup("Buda", "Soleh", "kresnawan", "kris123"))
+print(signup("Kresnawan Restu", "Sanjaya", "krisnauan", "Krisnauwu875"))
 
     
